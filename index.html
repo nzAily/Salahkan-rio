@@ -39,6 +39,7 @@
                     popupText.innerHTML = hasil;
                     
                     const utterance = new SpeechSynthesisUtterance(hasil);
+                    utterance.lang = "id-ID";
                     speechSynthesis.speak(utterance);
                 }, 2000);
             }
