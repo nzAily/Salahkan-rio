@@ -4,58 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salahkan Rio</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-        input[type="text"] {
-            padding: 10px;
-            width: 300px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #FF5C5C;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 20px;
-            color: #333;
-        }
-    </style>
+    <link rel="stylesheet" href="riosalah.css">
 </head>
 <body>
 
-    <h1>Salahkan Rio</h1>
-    <p>Masukkan masalah yang Anda hadapi:</p>
-    <input type="text" id="masalah" placeholder="Misal: Tidak bisa login">
-    <button onclick="salahkanRio()">Salahkan Rio</button>
+    <div class="container">
+        <h1>Salahkan Rio</h1>
+        <p>Masukkan masalah yang Anda hadapi:</p>
+        <input type="text" id="masalah" placeholder="Misal: Tidak bisa login">
+        <button onclick="salahkanRio()">Salahkan Rio</button>
+    </div>
 
-    <div id="result"></div>
+    <div class="overlay" id="overlay">
+        <div class="popup">
+            <p id="popup-text"></p>
+            <button class="close-btn" onclick="closePopup()">Ok bang</button>
+        </div>
+    </div>
 
     <script>
         function salahkanRio() {
             const masalah = document.getElementById("masalah").value;
-            const resultDiv = document.getElementById("result");
+            const popupText = document.getElementById("popup-text");
 
             if (masalah.trim() === "") {
-                resultDiv.innerHTML = "Silakan masukkan masalah Anda terlebih dahulu.";
+                popupText.innerHTML = "Silakan masukkan masalah Anda terlebih dahulu.";
+                showPopup();
             } else {
-                resultDiv.innerHTML = "Mencari orang yang disalahkan...";
-                
+                popupText.innerHTML = '<span class="loading">Mencari orang yang disalahkan...</span>';
+                showPopup();
+
                 setTimeout(() => {
                     const hasil = `Masalah "${masalah}" terjadi karena Rio. SALAHKAN RIO!`;
-                    resultDiv.innerHTML = hasil;
-
+                    popupText.innerHTML = hasil;
+                    
                     const utterance = new SpeechSynthesisUtterance(hasil);
                     speechSynthesis.speak(utterance);
-                }, 2000); 
+                }, 2000);
             }
+        }
+
+        function showPopup() {
+            document.getElementById("overlay").style.display = "flex";
+        }
+
+        function closePopup() {
+            document.getElementById("overlay").style.display = "none";
         }
     </script>
 
